@@ -137,7 +137,7 @@
         return;
       }
 
-      var boardSize = this.attributes[0].length;
+      var boardSize = this.attributes.n;
 
       // this board has a count entry at the end, so subtract 1 from i to avoid it
       for (let i = 0; i < boardSize; i += 1) {
@@ -197,7 +197,7 @@
     // test if any columns on this board contain conflicts
     hasAnyColConflicts: function() {
       // this function will check the entire board for any conflicts on a column
-      var currentSize = this.attributes[0].length;
+      var currentSize = this.attributes.n;
       // Process: iterate through a range of the length of the board
       for(let i=0;i < currentSize;i++){
         //    call hasColConflictAt with each range
@@ -317,7 +317,7 @@
         return;
       }
 
-      let boardSize = this.attributes[0].length;
+      let boardSize = this.attributes.n;
 
       for (let j = boardSize * -1; j < boardSize ; j += 1) {
         var result = this.hasMajorDiagonalConflictAt(j);
