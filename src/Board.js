@@ -266,7 +266,7 @@
 
       var count = 0;
 
-      for (let i = 0; i < currentSize ; i += 1) {
+      for (let i = 0; i < currentSize; i += 1) {
         if (i === currentSize) {
           break;
         }
@@ -307,14 +307,20 @@
       //    call hasMajorDiagonalConflictAt(colIndex)
       //    if result is true: return true, else false
       //
+      //    [. . . .][1, 0, 0, 0]
+      //    [. . . .][0, 1, 0, 0]
+      //    [. . . .][1, 0, 0, 0]
+      //    [. . . .][0, 1, 0, 0]
+
+
       if (!this.attributes) {
         return;
       }
 
       let boardSize = this.attributes[0].length;
 
-      for (let i = 0; i < boardSize ; i += 1) {
-        var result = this.hasMajorDiagonalConflictAt(i);
+      for (let j = boardSize * -1; j < boardSize ; j += 1) {
+        var result = this.hasMajorDiagonalConflictAt(j);
         if (result) {
           return true;
         }
@@ -345,7 +351,7 @@
       var currentBoardSize = this.attributes.n;
       var counts = 0;
       //  iterate through the rows
-      for(let i=0;i < currentSize;i++){
+      for(let i=0; i < currentBoardSize; i++){
         //    if columnIndex is < 0:
         if(minorDiagonalColumnIndexAtFirstRow < 0){
           //      break;
@@ -355,12 +361,12 @@
         //    if row at columnIndex === 1:
         if(result === 1){
           //      increment count
-          count++;
+          counts++;
         }
         //  return true if count > 0, else false
 
       }
-      if(count > 1){
+      if(counts > 1){
         return true;
       }
       return false;
@@ -373,10 +379,19 @@
       // if there are any conflicts using hasMinorDiagonalConflictAt, then return true else false
       // Process:
       //  Get the board
+      var boardSize = this.attributes.n;
       //  iterate through the range based on the board size
-      //    if any call to hasMinorDiagonalConflictAt return true
-      //      return true
-      //  return false at the end of the loop if there were no conflicts
+      for(let k = boardSize * 2;k >= 0; k--){
+        //    if any call to hasMinorDiagonalConflictAt return true
+        let resultCall = this.hasMinorDiagonalConflictAt(k);
+        if(resultCall){
+          //      return true
+          return true;
+          //  return false at the end of the loop if there were no conflicts
+
+        }
+
+      }
 
       return false; // fixme
     }
