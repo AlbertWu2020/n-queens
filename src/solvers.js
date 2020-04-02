@@ -89,10 +89,17 @@ window.findNRooksSolution = function(n) {
 window.countNRooksSolutions = function(n) {
   // var solutionCount = new Board([
   //   [1, 0, 0],
-  //   [0, 1, 0],
-  //   [0, 0, 1],
+  //   [0, 0, 0],
+  //   [0, 0, 0],
   // ]); //fixme
-
+  //
+  // create a solutionCount variable // 1
+  //  forEach row
+  //    check the 0,0 is 0
+  //    add one to the column 0
+  //    add 1 to the column 0
+  //    increment columnIndex
+  //
   console.log('Number of solutions for ' + n + ' rooks:', solutionCount);
   //return solutionCount;
 };
