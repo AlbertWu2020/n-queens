@@ -150,9 +150,7 @@
       return false;
     },
 
-
-
-    // COLUMNS - run from top to bottom
+// COLUMNS - run from top to bottom
     // --------------------------------------------------------------
     //
     // test if a specific column on this board contains a conflict
@@ -169,24 +167,47 @@
       // if count > 1: return true, else false
 
       // -------------------------------------------
-      // create a count variable
-      // iterate over the entire board
-      // for each row check the colIndex
-      //  if element equal one
-      // increament count by one
+      //create a count variable
+       // iterate over the entire board
+       // for each row check the colIndex
+        //  if element equal one
+        // increment count by one
+        if(!this.attributes){
+          return;
+        }
+
+        let count = 0;
+        let currentRowSize = this.attributes[0].length;
+
+        for(let i =0; i < currentRowSize;i++){
+
+          if(this.attributes[i][colIndex] === 1){
+            count++;
+          }
+        }
+        if(count > 1){
+          return true;
+        }else{
+          return false;
+        }
 
 
-
-
-      return false; // fixme
     },
 
     // test if any columns on this board contain conflicts
     hasAnyColConflicts: function() {
       // this function will check the entire board for any conflicts on a column
+      var currentSize = this.attributes[0].length;
       // Process: iterate through a range of the length of the board
-      //    call hasColConflictAt with each range
+      for(let i=0;i < currentSize;i++){
+        //    call hasColConflictAt with each range
+        var resultRange = this.hasColConflictAt(i);
       //    if any returns true: return true, else false
+        if(resultRange){
+          return true;
+        }
+
+      }
       return false; // fixme
     },
 
@@ -215,7 +236,47 @@
       // * If starting position was 0, it will go through the entire row, so check if there is any conflict. *
       // if columnIndex > the size of the board:
       //    return true if count > 1 else false;
-      return false; // fixme
+
+      //---------------------------------
+      // Albert's method
+      // iterate over the range of the size of the board
+      //    check the element if it is the last element
+      //      if true: break
+      //    create a count variable
+      //    count = 0
+      //    [1, 0, 0, 0]
+      //    [0, 1, 0, 0]
+      //    check if element at row/colIndex === 1
+      //      increment count
+      //      increament colIndex
+      //
+      //  if count > 1: return true, else false
+
+      // New problem:
+      // This algorithm only checks the top half of the board
+      // We should check the bottom half
+      //
+
+      if(!this.attributes) {
+        return;
+      }
+
+      var board = this.attributes;
+      var currentSize = board.n;
+
+      var count = 0;
+
+      for (let i = 0; i < currentSize ; i += 1) {
+        if (i === currentSize) {
+          break;
+        }
+
+        if (board[i][majorDiagonalColumnIndexAtFirstRow] === 1) {
+          count += 1;
+        }
+        majorDiagonalColumnIndexAtFirstRow += 1;
+      }
+      return count > 1;
     },
 
     // test if any major diagonals on this board contain conflicts
@@ -231,8 +292,39 @@
       //    call hasMajorDiagonalConflictAt on the index
       //    return true if true
       //  return the result of some
-      return false; // fixme
+
+
+      // Example board
+      //    [1, 0, 0, 0]
+      //    [0, 1, 0, 0]
+      //    [1, 0, 0, 0]
+      //    [0, 1, 0, 0]
+      // ------------------------------------
+      // Albert's Method
+      //  Check if there are any conflicts from diagonal top left bottom right
+      //
+      //  Iterate over the size of the board
+      //    call hasMajorDiagonalConflictAt(colIndex)
+      //    if result is true: return true, else false
+      //
+      if (!this.attributes) {
+        return;
+      }
+
+      let boardSize = this.attributes[0].length;
+
+      for (let i = 0; i < boardSize ; i += 1) {
+        var result = this.hasMajorDiagonalConflictAt(i);
+        if (result) {
+          return true;
+        }
+      }
+
+      return false;
     },
+
+    // TODO: We hit a block where we are only checking the top half of the matrix and the bottom half is left alone
+    //  Figure out how to check the bottom half
 
 
 
@@ -247,13 +339,31 @@
       //    return true if count > 0 else false
       // Process:
       //  get the board form this.attributes if it exists
+      if(!this.attributes){
+        return;
+      }
+      var currentBoardSize = this.attributes.n;
+      var counts = 0;
       //  iterate through the rows
-      //    if columnIndex is < 0:
-      //      break;
-      //    if row at columnIndex === 1:
-      //      increment count
-      //  return true if count > 0, else false
-      return false; // fixme
+      for(let i=0;i < currentSize;i++){
+        //    if columnIndex is < 0:
+        if(minorDiagonalColumnIndexAtFirstRow < 0){
+          //      break;
+          break;
+        }
+        var result = this.attributes[i][minorDiagonalColumnIndexAtFirstRow - i];
+        //    if row at columnIndex === 1:
+        if(result === 1){
+          //      increment count
+          count++;
+        }
+        //  return true if count > 0, else false
+
+      }
+      if(count > 1){
+        return true;
+      }
+      return false;
     },
 
     // test if any minor diagonals on this board contain conflicts
@@ -267,6 +377,7 @@
       //    if any call to hasMinorDiagonalConflictAt return true
       //      return true
       //  return false at the end of the loop if there were no conflicts
+
       return false; // fixme
     }
 
