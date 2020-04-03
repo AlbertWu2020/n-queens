@@ -141,23 +141,42 @@ window.countNRooksSolutions = function(n) {
 // [0, 0, 0]
 
 
-  // ---------------------------------------------------------
-  // findSolution(index, rowNum)
-  //  check if index is equal to rowNum
-  //    then increment solutionCount by 1
-  //    return;
-  //  iterating thorugh the board.rows(row)
-  //   toggle the piece
-  //   if board is valid
-  //      recurse with findSolution(index + 1, rowNum)
-  //   untoggle piece
-
-  // create solution count => 1
+// ---------------------------------------------------------
+// create solution count => 1
+var solutionCount = 0;
+// findSolution(index, rowNum)
+var findSolution = function(index, rowNum){
   // get the number of rows => 3
+var getRows = board.rows();
+    //  check if index is equal to rowNum
+    if(index === rowNum){
+
+      //    then increment solutionCount by 1
+      solutionCount++;
+      //    return;
+      return;
+    }
+      //  iterating thorugh the board.rows(row)
+      for(let i = 0;i < board.rows(rows).length;i++){
+
+        //   toggle the piece
+        board.toggle(rowNum, i);
+        //   if board is valid
+        if(){
+
+          //      recurse with findSolution(index + 1, rowNum)
+          findSolution(index + 1; rowNum);
+          //   untoggle piece
+          board.toggle(rowNum, i);
+        }
+      }
+  }
+
+
   // call findSolution(0, rowNum)
-
+findSolution(0, rowNum);
   // return solution count
-
+return solutionCount;
 
   console.log('Number of solutions for ' + n + ' rooks:', solutionCount);
   return solutionCount;
